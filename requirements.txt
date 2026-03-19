@@ -11,3 +11,5 @@ networkx==3.6.1
 matplotlib==3.10.0
 scipy==1.16.3
 seaborn==0.13.2
+optuna==4.6.0
+optuna-integration==4.8.0

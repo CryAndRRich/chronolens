@@ -6,9 +6,11 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import numpy as np
 import pandas as pd
 import torch
+import torch.nn as nn
 from torch.utils.data import DataLoader
 
 from preprocess.preprocess_data import drop_duplicates, drop_overlap, validate_and_clean_dates, build_vocab_mapping, apply_vocab_mapping, manual_augment
+from preprocess.embedding import extract_deep_features, SequenceFeatureExtractor
 from preprocess.dataloader import UserBehaviorDataset, create_dataloaders
 from config import CONFIG_DATA
 
@@ -144,3 +146,24 @@ class DataManager:
             data_generator=self.DATA_GENERATOR,
             augment=augment)
         return (self.train_loader, self.val_loader, self.test_loader)
+
+    def get_embedding(self, 
+                      model: nn.Module, 
+                      device: torch.device) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+        """
+        Trích xuất embedding từ mô hình đã huấn luyện
+        """
+        x_train_deep, y_train_deep = extract_deep_features(model, self.train_loader, device)
+        x_val_deep, y_val_deep = extract_deep_features(model, self.val_loader, device)
+        x_test_deep = extract_deep_features(model, self.test_loader, device)
+
+        extractor = SequenceFeatureExtractor(top_k_vocab=50)
+        x_train_manual = extractor.extract(self.x_train) 
+        x_val_manual = extractor.extract(self.x_val)
+        x_test_manual = extractor.extract(self.x_test)
+
+        x_train_embed = np.concatenate([x_train_deep, x_train_manual], axis=1)
+        x_val_embed = np.concatenate([x_val_deep, x_val_manual], axis=1)
+        x_test_embed = np.concatenate([x_test_deep, x_test_manual], axis=1)
+
+        return (x_train_embed, y_train_deep, x_val_embed, y_val_deep, x_test_embed)

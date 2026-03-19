@@ -1,13 +1,20 @@
 from copy import deepcopy
 import os
 import sys
+from typing import Tuple, Union
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
+import numpy as np
+import xgboost as xgb
+import lightgbm as lgb
+
 import torch
+import torch.nn as nn
 from torch.utils.data import DataLoader
 from torch.amp import autocast, GradScaler
 
 from config import CONFIG_MODEL
+from model.chrono_net.hypertuning import train_lgb_model, train_xgb_model
 from model.loss import HybridThresholdLoss
 from preprocess import DataManager
 from utils.evaluate import run_inference, evaluate_wmse
@@ -126,7 +133,7 @@ def retrain_model(model_name: str,
                   num_epochs: int,
                   checkpoint_file: str,
                   device: torch.device,
-                  verbose: bool = False) -> int:
+                  verbose: bool = False) -> nn.Module:
     
     scheduler_kwargs = deepcopy(CONFIG_MODEL.SCHEDULER_KWARGS)
     scheduler_kwargs["epochs"] = num_epochs
@@ -182,3 +189,44 @@ def retrain_model(model_name: str,
     
     torch.save(model.state_dict(), checkpoint_file)
     return model
+
+
+def train_tree_model(model_name: str,
+                     x_train: np.ndarray, 
+                     y_train: np.ndarray, 
+                     x_val: np.ndarray, 
+                     y_val: np.ndarray, 
+                     x_full: np.ndarray, 
+                     y_full: np.ndarray, 
+                     attr_name: str,
+                     n_trials: int,
+                     random_seed: int) -> Tuple[Union[xgb.Booster, lgb.Booster], Union[xgb.Booster, lgb.Booster]]:
+    
+    if model_name == "xgb":
+        search_model, final_model = train_xgb_model(
+            x_train=x_train, 
+            y_train=y_train, 
+            x_val=x_val, 
+            y_val=y_val, 
+            x_full=x_full, 
+            y_full=y_full, 
+            attr_name=attr_name, 
+            n_trials=n_trials,
+            fixed_params=CONFIG_MODEL.OPTUNA_PARAMS[model_name], 
+            random_seed=random_seed
+        )
+    elif model_name == "lgbm":
+        search_model, final_model = train_lgb_model(
+            x_train=x_train, 
+            y_train=y_train, 
+            x_val=x_val, 
+            y_val=y_val, 
+            x_full=x_full, 
+            y_full=y_full, 
+            attr_name=attr_name, 
+            n_trials=n_trials, 
+            fixed_params=CONFIG_MODEL.OPTUNA_PARAMS[model_name],
+            random_seed=random_seed
+        )
+
+    return search_model, final_model

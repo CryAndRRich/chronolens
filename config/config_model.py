@@ -59,3 +59,27 @@ class CONFIG_MODEL:
         "anneal_strategy": "cos",
         "final_div_factor": 10000.0,
     }
+
+    OPTUNA_PARAMS: Dict[str, Dict[str, Any]] = {
+        "xgb": {
+            "objective": "reg:squarederror",
+            "tree_method": "hist",
+            "eval_metric": "rmse",
+            "device": "cuda", 
+            "n_jobs": -1,
+            "random_state": RANDOM_SEED
+        },
+
+        "lgbm": {
+            "objective": "regression",
+            "boosting_type": "gbdt",
+            "metric": "rmse",
+            "max_bin": 127,
+            "max_depth": -1,
+            "device_type": "gpu",
+            "verbose": -1,
+            "n_jobs": -1,
+            "feature_pre_filter": False,
+            "random_state": RANDOM_SEED
+        }
+    }

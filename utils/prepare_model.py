@@ -10,16 +10,16 @@ from model import get_model
 from preprocess import DataManager
 
 
-def update_model_kwargs(data: DataManager,
+def update_model_kwargs(data_manager: DataManager,
                         model_kwargs: Dict[str, Dict[str, Any]]) -> Dict[str, Dict[str, Any]]:
     if "vocab_size" in model_kwargs.keys():
-        model_kwargs["vocab_size"] = data.VOCAB_SIZE
+        model_kwargs["vocab_size"] = data_manager.VOCAB_SIZE
 
     if "seq_length" in model_kwargs.keys():
-        model_kwargs["seq_length"] = data.SEQ_LENGTH
+        model_kwargs["seq_length"] = data_manager.SEQ_LENGTH
 
     if "embedding_dim" in model_kwargs.keys():
-        model_kwargs["embedding_dim"] = data.EMBEDDING_DIM
+        model_kwargs["embedding_dim"] = data_manager.EMBEDDING_DIM
 
     return model_kwargs
     

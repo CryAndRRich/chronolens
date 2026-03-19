@@ -29,6 +29,3 @@ def get_model(name: str, **kwargs) -> object:
 import model.chrono_net.chrono_c
 import model.chrono_net.chrono_g
 import model.chrono_net.chrono_r
-
-import model.chrono_net.baselines.ml
-import model.chrono_net.baselines.rnn
