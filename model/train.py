@@ -1,4 +1,3 @@
-from typing import Optional
 from copy import deepcopy
 import os
 import sys
@@ -21,7 +20,7 @@ def train_model(model_name: str,
                 val_loader: DataLoader,  
                 y_val: torch.Tensor, 
                 num_epochs: int,
-                early_stopping: Optional[int],
+                early_stopping: int,
                 checkpoint_file: str,
                 device: torch.device,
                 verbose: bool = False) -> int:

@@ -119,7 +119,7 @@ class ChronoR(nn.Module):
         )
         
         self.attn_pool = AttentionPooling1D(embedding_dim)
-        self.dropout = nn.Dropout(p=embedding_dim)
+        self.dropout = nn.Dropout(p=dropout_rate)
         self.cascade_head = CascadeRegressionHead(embedding_dim)
 
         self.apply(self._init_weights)
