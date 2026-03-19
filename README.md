@@ -11,19 +11,23 @@
 
 ## 📖 Giới thiệu
 
-**TAGFlow** là giải pháp phân tích và dự báo chuỗi hành vi người dùng do đội thi **HD4K** phát triển, vinh dự góp mặt tại vòng bán kết cuộc thi **"DataFlow 2026: The Alchemy of Minds"**.
+**ChronoLens** là giải pháp phân tích và dự báo chuỗi hành vi người dùng do đội thi **HD4K** phát triển, vinh dự góp mặt tại vòng chung kết cuộc thi **"DataFlow 2026: The Alchemy of Minds"** với mục tiêu giải quyết bài toán Hồi quy đa mục tiêu (Multi-target Regression).
 
-Dự án giải quyết bài toán phân loại đa nhiệm (Multi-output Classification) trong lĩnh vực thương mại điện tử. Mục tiêu cốt lõi là dự báo chính xác và đồng thời **6 thuộc tính độc lập** đại diện cho quyết định mua sắm của khách hàng, dựa trên các chuỗi hành động có độ dài biến thiên (variable-length sequences). Giải pháp này hỗ trợ trực tiếp cho bài toán tối ưu hóa chuỗi cung ứng, giúp doanh nghiệp chủ động phân bổ nguồn lực và quản lý kho bãi hiệu quả.
+Mục tiêu cốt lõi của ChronoLens không dừng lại ở việc phân loại hành vi tĩnh, mà là **dự báo thời gian giao dịch và công suất nhà máy** trực tiếp từ các chuỗi hành động biến thiên của khách hàng. Dự án đóng vai trò là chiếc cầu nối hoàn hảo giữa thế giới dữ liệu số và hoạt động vận hành vật lý, giúp doanh nghiệp chủ động điều tiết chuỗi cung ứng và lập kế hoạch sản xuất sát với thực tế.
 
-Điểm làm nên sự khác biệt của TAGFlow là việc phá vỡ giới hạn của các mô hình "hộp đen". Hệ thống không chỉ chinh phục thước đo khắt khe Exact-Match Accuracy thông qua kiến trúc Mạng nơ-ron Đồ thị đa nhiệm (**TAGNet**) và quy trình dán nhãn giả 2 giai đoạn, mà còn tích hợp sâu sắc tính giải thích (**Explainable AI**). TAGFlow có khả năng lập bản đồ luồng hành vi khách hàng, phát hiện các "nút thắt" điều hướng trọng yếu và lọc bỏ các tín hiệu gây nhiễu, giúp doanh nghiệp thấu hiểu sâu sắc động lực mua sắm thực sự phía sau những luồng click chuột.
+Điểm sáng tạo làm nên vị thế của ChronoLens là kiến trúc **Hybrid Neural-ML**. Bằng cách "chưng cất" các biểu diễn ngữ cảnh từ mạng Neural đồ thị đa nhiệm và kết hợp với sức mạnh dò tìm sai số vi mô của các mô hình cây quyết định, hệ thống không chỉ triệt tiêu các điểm mù của mạng học sâu mà còn đem lại độ chính xác cực hạn trên thước đo WMSE.
 
+ChronoLens gồm 3 phần chính:
+- **Khám phá dữ liệu:** Trực quan hóa bức tranh toàn cảnh về chuỗi hành vi, giải mã các quy luật thời gian, tỷ lệ đa dạng hành động và những "tín hiệu mỏ neo" quyết định đến mức công suất.
+- **Dự đoán trực tiếp:** Trải nghiệm sức mạnh của Cỗ máy Neural-ML trong thời gian thực. Hệ thống tự động dịch thuật các chuỗi hành đồng hỗn độn thành 6 tham số vận hành chuẩn xác.
+- **Xây dựng lịch trình:** Ứng dụng trực tiếp kết quả dự báo vào bài toán tối ưu hóa nguồn lực. Mô phỏng cách doanh nghiệp phân bổ công suất nhà máy tự động dựa trên dòng thời gian được dự đoán.
+    
 Nếu bạn thấy dự án này hữu ích, hãy ủng hộ chúng tôi một ngôi sao ⭐ trên GitHub nhé!
 
 ## 📂 Cấu trúc Dự án
 ```text
-tagflow/
+chronolens/
 ├── data/
-│   ├── submissions/                            # Các file kết quả nộp bài (submission)
 │   └── weights/                                # Nơi lưu trữ trọng số (weights) của các mô hình
 │
 ├── config/
@@ -33,29 +37,28 @@ tagflow/
 ├── preprocess/
 │   ├── __init__.py                             # Lớp DataManager quản lý toàn bộ pipeline xử lý dữ liệu
 │   ├── dataloader.py                           # DataLoader tùy chỉnh cho dữ liệu
+│   ├── embedding.py                            # Trích xuất embedding từ chuỗi hành động 
 │   └── preprocess_data.py                      # Tiền xử lý dữ liệu 
 │
 ├── model/
-│   ├── models/                             
-│   │   ├── baselines/                          # Các mô hình cơ sở
-│   │   │   ├── ml.py/                          # Nhóm mô hình học máy
-│   │   │   └── rnn.py/                         # Nhóm mô hình mạng hồi quy
+│   ├── chrono_net/                             
+│   │   ├── hypertuning/                        # Tìm kiếm siêu tham số cho mô hình cây
+│   │   │   ├── xgb.py/                       
+│   │   │   └── lgbm.py/                        
 │   │   │
-│   │   ├── attention.py                        # Module Attention1D tùy chỉnh
-│   │   ├── taanet.py                           # Mô hình TAANet 
-│   │   ├── tacnet.py                           # Mô hình TACNet
-│   │   ├── tarnet.py                           # Mô hình TARNet
-│   │   └── tagnet.py                           # Mô hình TAGNet (kiến trúc chính)
+│   │   ├── layers.py                           # Module Attention1D, GCEFusion và CascadeRegression
+│   │   ├── chrono_c.py                         # Mô hình ChronoC (Convolutional)
+│   │   ├── chrono_g.py                         # Mô hình ChronoG (Graph)
+│   │   └── chrono_r.py                         # Mô hình ChronoR (Recurrent)
 │   │
 │   ├── MODEL_RESULTS.md                        # Tài liệu ghi chép kết quả chạy của mô hình
 │   │
-│   └── train/                                  # Script huấn luyện mô hình
+│   ├── loss.py                                 # Hàm loss tùy chỉnh
+│   └── train.py                                # Script huấn luyện mô hình
 │
-├── explainer/                                  # Module giải thích mô hình TAGNet
+├── explainer/                                  # Module giải thích mô hình
 │   ├── error_attn.py                           # Phân tích nhãn sai
-│   ├── global_attn.py                          # Phân tích toàn cục
-│   ├── graph_attn.py                           # Phân tích đồ thị
-│   └── integrate_grad.py                       # Phân tích tích hợp gradient
+│   └── graph_attn.py                           # Phân tích đồ thị
 │
 ├── utils/
 │   ├── set_up.py                               # Thiết lập môi trường, đảm bảo tính tái lập
@@ -65,16 +68,16 @@ tagflow/
 │
 ├── scripts/                                    
 │   ├── dataflow2026_hd4k_insight.ipynb         # Script chạy phân tích dữ liệu
-│   ├── dataflow2026_hd4k_run_pipeline.ipynb    # Script chạy toàn bộ pipeline
-│   ├── dataflow2026_hd4k_run_baselines.ipynb   # Script chạy các mô hình cơ sở
+│   ├── dataflow2026_hd4k_run_stage_1.ipynb    # Script chạy toàn bộ pipeline
+│   ├── dataflow2026_hd4k_run_stage_2.ipynb   # Script chạy các mô hình cơ sở
 │   ├── dataflow2026_hd4k_run_xai.ipynb         # Script giải thích mô hình với xAI
 │   │
 │   └── HOW_TO_RUN_KAGGLE.md                    # Hướng dẫn chạy trên Kaggle
 │
 ├── report/                                    
 │   ├── img/                                    # Ảnh sử dụng trong report, README
-│   ├── TAGFlow_report.pdf                      # File báo cáo dự án
-│   └── TAGFlow_slide_pdf.pdf                   # Slide thuyết trình dự án (pdf)
+│   ├── ChronoLens_report.pdf                   # File báo cáo dự án
+│   └── ChronoLens_slide_pdf.pdf                # Slide thuyết trình dự án (pdf)
 │
 ├── .gitignore                       
 ├── LICENSE                                     # Giấy phép MIT
