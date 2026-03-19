@@ -98,7 +98,7 @@ class DataManager:
 
         # Tạo từ điển và ánh xạ
         self.id_to_idx, self.VOCAB_SIZE = build_vocab_mapping(
-            [self.x_train, self.x_val, self.x_test], self.FEATURE_COLS
+            [self.x_train, self.x_val], self.FEATURE_COLS
         )
         self.map_func = np.vectorize(lambda x: self.id_to_idx.get(x, self.UNK_TOKEN))
         self.x_train = apply_vocab_mapping(self.x_train, self.map_func, self.FEATURE_COLS)
