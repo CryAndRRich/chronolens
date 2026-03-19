@@ -48,7 +48,6 @@ class DataManager:
         # Khởi chạy Pipeline
         self._load_raw_csv()
         self._setup_initial_pipeline()
-        self.__create_dataloader(seed_worker=self.SEED_WORKER, data_generator=self.DATA_GENERATOR)
 
     def _load_raw_csv(self) -> None:
         """
@@ -135,8 +134,12 @@ class DataManager:
         """
         return (self.x_train, self.y_train, self.x_val, self.y_val, self.x_test)
     
-    def get_dataloaders(self) -> Union[Tuple[DataLoader, DataLoader, DataLoader], DataLoader]:
+    def get_dataloaders(self, augment: bool = True) -> Union[Tuple[DataLoader, DataLoader, DataLoader], DataLoader]:
         """
         Trả về DataLoader cho tập train, test và val
         """
+        self.__create_dataloader(
+            seed_worker=self.SEED_WORKER, 
+            data_generator=self.DATA_GENERATOR,
+            augment=augment)
         return (self.train_loader, self.val_loader, self.test_loader)

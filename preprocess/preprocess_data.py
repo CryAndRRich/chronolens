@@ -39,11 +39,11 @@ def drop_overlap(x_train: pd.DataFrame,
     
     clean_train_idx = train_merged[train_merged["is_in_val"].isna()]["old_idx"]
     
-    x_train = x_train.loc[clean_train_idx].drop(columns=["old_idx"]).reset_index(drop=True)
-    y_train = y_train.loc[clean_train_idx].reset_index(drop=True)
+    x_train_clean = x_train.loc[clean_train_idx].reset_index(drop=True)
+    y_train_clean = y_train.loc[clean_train_idx].reset_index(drop=True)
     
     # print(f" - Loại bỏ {len_before - len(x_train)} chuỗi Train bị trùng với Val")
-    return x_train, y_train
+    return x_train_clean, y_train_clean
 
 
 def validate_and_clean_dates(x_df: pd.DataFrame, 
@@ -100,8 +100,7 @@ def apply_vocab_mapping(df: pd.DataFrame,
     Áp dụng bộ từ điển vào DataFrame
     """
     df_mapped = df.copy()
-    for col in feature_cols:
-        df_mapped.loc[:, feature_cols] = map_func(df_mapped[feature_cols].values)
+    df_mapped.loc[:, feature_cols] = map_func(df_mapped[feature_cols].values)
     return df_mapped
 
 
@@ -126,11 +125,7 @@ def manual_augment(x_train: pd.DataFrame,
         c_train = train_counts.get(length, 0)
 
         if c_train > 0 and c_test > c_train:
-            if c_train == 0:
-                multiplier = 10
-            else:
-                multiplier = min(c_test / c_train, 10)
-            
+            multiplier = min(c_test / c_train, 10)
             n_repeats = int(multiplier) - 1
             
             if n_repeats > 0:
