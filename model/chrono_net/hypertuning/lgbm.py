@@ -1,6 +1,5 @@
 from typing import Any, Dict, Tuple
-import tqdm
-
+from tqdm.auto import tqdm
 import numpy as np
 import lightgbm as lgb
 
