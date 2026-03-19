@@ -153,16 +153,24 @@ class DataManager:
         """
         Trích xuất embedding từ mô hình đã huấn luyện
         """
-        self.__create_dataloader(
-            seed_worker=self.SEED_WORKER, 
-            data_generator=self.DATA_GENERATOR,
-            augment=False)
+        train_extract_dataset = UserBehaviorDataset(self.x_train, self.y_train, self.FEATURE_COLS, self.ATTRIBUTE_COLS, augment=False)
+        train_extract_loader = DataLoader(train_extract_dataset, batch_size=self.BATCH_SIZE, shuffle=False, num_workers=self.NUM_WORKERS)
         
-        x_train_deep, y_train_deep = extract_deep_features(model, self.train_loader, device)
-        x_val_deep, y_val_deep = extract_deep_features(model, self.val_loader, device)
-        x_test_deep = extract_deep_features(model, self.test_loader, device)
+        val_extract_dataset = UserBehaviorDataset(self.x_val, self.y_val, self.FEATURE_COLS, self.ATTRIBUTE_COLS, augment=False)
+        val_extract_loader = DataLoader(val_extract_dataset, batch_size=self.BATCH_SIZE, shuffle=False, num_workers=self.NUM_WORKERS)
+        
+        test_extract_dataset = UserBehaviorDataset(self.x_test, None, self.FEATURE_COLS, self.ATTRIBUTE_COLS, augment=False)
+        test_extract_loader = DataLoader(test_extract_dataset, batch_size=self.BATCH_SIZE, shuffle=False, num_workers=self.NUM_WORKERS)
 
+        # Trích xuất Deep Features
+        x_train_deep, y_train_deep = extract_deep_features(model, train_extract_loader, device)
+        x_val_deep, y_val_deep = extract_deep_features(model, val_extract_loader, device)
+        x_test_deep = extract_deep_features(model, test_extract_loader, device)
+
+        # Trích xuất Manual Features
         extractor = SequenceFeatureExtractor(feature_cols=self.FEATURE_COLS, top_k_vocab=50)
+        extractor.extract(self.x_train) 
+        
         x_train_manual = extractor.extract(self.x_train) 
         x_val_manual = extractor.extract(self.x_val)
         x_test_manual = extractor.extract(self.x_test)
