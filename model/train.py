@@ -67,7 +67,7 @@ def train_model(model_name: str,
     
     best_score = float("inf")
     best_epoch = 0 
-    scaler = GradScaler()
+    scaler = GradScaler("cuda")
     early_count = 0
     
     for epoch in range(num_epochs):
@@ -80,7 +80,7 @@ def train_model(model_name: str,
             x, y = x.to(device), y.to(device)
             optimizer.zero_grad(set_to_none=True)
             
-            with autocast():
+            with autocast("cuda"):
                 preds = model(x)
                 
             loss = loss_fn(preds, y.float())
@@ -150,7 +150,7 @@ def retrain_model(model_name: str,
         device=device
     )
     
-    scaler = GradScaler()
+    scaler = GradScaler("cuda")
 
     for epoch in range(num_epochs):
         if epoch <= loss_fn.total_epochs:
@@ -162,7 +162,7 @@ def retrain_model(model_name: str,
             x, y = x.to(device), y.to(device)
             optimizer.zero_grad(set_to_none=True)
             
-            with autocast():
+            with autocast("cuda"):
                 preds = model(x)
                 
             loss = loss_fn(preds, y.float())
