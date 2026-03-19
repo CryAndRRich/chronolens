@@ -1,0 +1,26 @@
+[theme]
+base = "dark"
+
+textColor = "#F1F5F9"            
+primaryColor = "#3B82F6"          
+backgroundColor = "#050814"       
+secondaryBackgroundColor = "#111827" 
+
+showWidgetBorder = true
+borderColor = "#1E293B"        
+
+dataframeHeaderBackgroundColor = "#1E293B" 
+
+font = "IBM Plex Sans"
+baseFontWeight = 300
+baseFontSize = 18
+
+headingFont = "IBM Plex Sans"
+headingFontWeights = [400, 500, 600, 400, 400, 400]
+headingFontSizes = ["2.5rem", "1.75rem", "1.25rem", "1rem", "1rem", "1rem"]
+
+[[theme.fontFaces]]
+family = "IBM Plex Sans"
+style = "normal"
+weight = "300 700"
+url = "https://fonts.gstatic.com/s/ibmplexsans/v14/zYX-KVElMYYaJe8bpLHnCw.woff2"

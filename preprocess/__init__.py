@@ -162,7 +162,7 @@ class DataManager:
         x_val_deep, y_val_deep = extract_deep_features(model, self.val_loader, device)
         x_test_deep = extract_deep_features(model, self.test_loader, device)
 
-        extractor = SequenceFeatureExtractor(top_k_vocab=50)
+        extractor = SequenceFeatureExtractor(feature_cols=self.FEATURE_COLS, top_k_vocab=50)
         x_train_manual = extractor.extract(self.x_train) 
         x_val_manual = extractor.extract(self.x_val)
         x_test_manual = extractor.extract(self.x_test)
