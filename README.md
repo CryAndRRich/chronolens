@@ -68,8 +68,8 @@ chronolens/
 │
 ├── scripts/                                    
 │   ├── dataflow2026_hd4k_insight.ipynb         # Script chạy phân tích dữ liệu
-│   ├── dataflow2026_hd4k_run_stage_1.ipynb    # Script chạy toàn bộ pipeline
-│   ├── dataflow2026_hd4k_run_stage_2.ipynb   # Script chạy các mô hình cơ sở
+│   ├── dataflow2026_hd4k_run_stage_1.ipynb     # Script chạy toàn bộ pipeline
+│   ├── dataflow2026_hd4k_run_stage_2.ipynb     # Script chạy các mô hình cơ sở
 │   ├── dataflow2026_hd4k_run_xai.ipynb         # Script giải thích mô hình với xAI
 │   │
 │   └── HOW_TO_RUN_KAGGLE.md                    # Hướng dẫn chạy trên Kaggle

@@ -10,7 +10,7 @@ Do tính bảo mật của bộ dữ liệu của cuộc thi, các scripts muố
 
 ![Step 1.2](../report/img/step_1_2_kaggle.png)
 
-- Thực hiện đặt tên Datasets là "DF2026-HD4K-TAGFlow" (**Bắt buộc**) và bấm "Create", việc này sẽ tốn khoảng 2-3 phút. Sau khi hoàn thành thì tắt tab này đi.
+- Thực hiện đặt tên Datasets là "DF2026-HD4K-ChronoLens" (**Bắt buộc**) và bấm "Create", việc này sẽ tốn khoảng 4-5 phút. Sau khi hoàn thành thì tắt tab này đi.
 
 ![Step 1.3](../report/img/step_1_3_kaggle.png)
 
@@ -32,7 +32,7 @@ Do tính bảo mật của bộ dữ liệu của cuộc thi, các scripts muố
 
 ![Step 3.1](../report/img/step_3_1_kaggle.png)
 
-- Ở bên phải, bấm vào nút "+ Add Input". Thông thường, bộ dataset "DF2026-HD4K-TAGFlow" bạn vừa tạo sẽ xuất hiện đầu tiên do bạn mới tạo, nếu không thấy bạn có thể tìm kiếm nó trong thanh tìm kiếm bằng dán URL. Bấm vào dấu "+". Khi dấu "+" chuyển thành dấu "-" tức là đã thành công, bấm vào dấu "X" ở bên phải chữ Add Input.
+- Ở bên phải, bấm vào nút "+ Add Input". Thông thường, bộ dataset "DF2026-HD4K-ChronoLens" bạn vừa tạo sẽ xuất hiện đầu tiên do bạn mới tạo, nếu không thấy bạn có thể tìm kiếm nó trong thanh tìm kiếm bằng dán URL. Bấm vào dấu "+". Khi dấu "+" chuyển thành dấu "-" tức là đã thành công, bấm vào dấu "X" ở bên phải chữ Add Input.
 
 ![Step 3.2](../report/img/step_3_2_kaggle.png)
 

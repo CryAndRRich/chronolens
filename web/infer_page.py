@@ -7,10 +7,10 @@ import os
 import time
 from gensim.models import Word2Vec
 
-VOCAB_PATH = "data/weights/vocab_dict.pkl"
-W2V_PATH = "data/weights/word2vec_264.model"
-VECTORIZER_PATH = "data/weights/count_vectorizer.pkl"
-MODEL_DIR = "data/weights/best_model_chrono_r_lgbm"
+VOCAB_PATH = "data/data_for_scripts/weights/vocab_dict.pkl"
+W2V_PATH = "data/data_for_scripts/weights/word2vec_264.model"
+VECTORIZER_PATH = "data/data_for_scripts/weights/count_vectorizer.pkl"
+MODEL_DIR = "data/data_for_scripts/weights/best_model_chrono_r_lgbm"
 ATTRIBUTE_LIST = ["attr_1", "attr_2", "attr_3", "attr_4", "attr_5", "attr_6"]
 
 TOP_K_VOCAB = 50 
