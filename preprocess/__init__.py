@@ -153,6 +153,11 @@ class DataManager:
         """
         Trích xuất embedding từ mô hình đã huấn luyện
         """
+        self.__create_dataloader(
+            seed_worker=self.SEED_WORKER, 
+            data_generator=self.DATA_GENERATOR,
+            augment=False)
+        
         x_train_deep, y_train_deep = extract_deep_features(model, self.train_loader, device)
         x_val_deep, y_val_deep = extract_deep_features(model, self.val_loader, device)
         x_test_deep = extract_deep_features(model, self.test_loader, device)
