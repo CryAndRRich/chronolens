@@ -99,8 +99,9 @@ class DataManager:
             [self.x_train, self.x_val, self.x_test], self.FEATURE_COLS
         )
         self.map_func = np.vectorize(lambda x: self.id_to_idx.get(x, self.UNK_TOKEN))
-        for df in [self.x_train, self.x_val, self.x_test]:
-            df = apply_vocab_mapping(df, self.map_func, self.FEATURE_COLS)
+        self.x_train = apply_vocab_mapping(self.x_train, self.map_func, self.FEATURE_COLS)
+        self.x_val = apply_vocab_mapping(self.x_val, self.map_func, self.FEATURE_COLS)
+        self.x_test = apply_vocab_mapping(self.x_test, self.map_func, self.FEATURE_COLS)
 
     def __create_dataloader(self,
                             seed_worker,
@@ -122,8 +123,8 @@ class DataManager:
             self.x_test, 
             self.FEATURE_COLS, 
             self.ATTRIBUTE_COLS,
-            self.NUM_WORKERS, 
             self.BATCH_SIZE, 
+            self.NUM_WORKERS, 
             seed_worker=seed_worker, 
             data_generator=data_generator
         )
