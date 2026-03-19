@@ -74,22 +74,30 @@ chronolens/
 │   │
 │   └── HOW_TO_RUN_KAGGLE.md                    # Hướng dẫn chạy trên Kaggle
 │
+├── .streamlit/                                 # Cấu hình cho giao diện Streamlit           
+├── web/                                    
+│   ├── data_page.py                            # Trang tổng quan dữ liệu
+│   ├── infer_page.py                           # Trang chạy dự đoán mô hình real-time
+│   └── scheduler_page.py                       # Trang tối ưu lịch trình sắp xếp kho hàng
+│
 ├── report/                                    
 │   ├── img/                                    # Ảnh sử dụng trong report, README
+│   ├── ChronoLens_demo.pdf                     # Video demo dự án
 │   ├── ChronoLens_report.pdf                   # File báo cáo dự án
 │   └── ChronoLens_slide_pdf.pdf                # Slide thuyết trình dự án (pdf)
 │
 ├── .gitignore                       
 ├── LICENSE                                     # Giấy phép MIT
 ├── requirements.txt                            # Danh sách thư viện cần thiết
+├── app.py                                      # Chạy ứng dụng Streamlit
 └── README.md                                      
 ```
 
 ## 💻 Yêu cầu Hệ thống & Hướng dẫn Sử dụng
 Có tổng tất cả 4 scripts, tất cả đều cần chạy trên Kaggle, cụ thể:
 - Script chạy phân tích dữ liệu và rút ra insight: dataflow2026_hd4k_insight.ipynb  
-- Script chạy toàn bộ pipeline huấn luyện mô hình: dataflow2026_hd4k_run_baselines.ipynb
-- Script chạy các mô hình cơ sở để so sánh: dataflow2026_hd4k_run_explainer.ipynb
+- Script chạy stage 1 huấn luyện mô hình: dataflow2026_hd4k_run_stage_1.ipynb
+- Script chạy stage 2 huấn luyện mô hình: dataflow2026_hd4k_run_stage_2.ipynb
 - Script giải thích mô hình với xAI: dataflow2026_hd4k_run_xai.ipynb
 
 Chi tiết thông tin, hướng dẫn và thời gian chạy từng script có thể đọc trong chính các file jupyter notebook.
